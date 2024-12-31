@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "523305234416",
+    "project_id": "burntech-ef163",
+    "storage_bucket": "burntech-ef163.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523305234416:android:3e66f04cbc65a3ef91f735",
+        "android_client_info": {
+          "package_name": "burntech.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVa6JXbalcamU8q8GdsEtMkAWxjtsvEGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
