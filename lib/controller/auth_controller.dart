@@ -83,7 +83,7 @@ class LoginController extends ChangeNotifier {
           MaterialPageRoute(builder: (context) => BottomNavBar()),
               (route) => false,
         );
-        return null; // Signup successful
+
       }
     } on FirebaseAuthException catch (e) {
        UtilsConstant.firebaseAuthError(e.code);

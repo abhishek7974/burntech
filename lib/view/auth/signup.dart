@@ -16,22 +16,16 @@ class SignupPage extends ConsumerStatefulWidget {
 
 class _SignupPageState extends ConsumerState<SignupPage> {
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
-
   final TextEditingController nameController = TextEditingController();
 
-  final TextEditingController interestController = TextEditingController();
-
-  final TextEditingController religionController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Add form key
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     nameController.dispose();
-    interestController.dispose();
-    religionController.dispose();
     super.dispose();
   }
 
@@ -45,6 +39,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
         child: Center(
           child: Form(
+            key: _formKey, // Assign the form key
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -61,17 +56,43 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     controller: nameController,
                     labelText: "Name",
                     prefixIcon: const Icon(Icons.person),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Name is required';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     controller: emailController,
                     labelText: "Email",
                     prefixIcon: const Icon(Icons.email),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email is required';
+                      }
+                      if (!RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$")
+                          .hasMatch(value)) {
+                        return 'Enter a valid email address';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     controller: passwordController,
                     labelText: "Password",
                     prefixIcon: const Icon(Icons.lock),
                     obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password is required';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 20),
                   _buildSignUpButton(context, ref, isLoading),
@@ -126,6 +147,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     required String labelText,
     required Icon prefixIcon,
     bool obscureText = false,
+    String? Function(String?)? validator, // Add validator parameter
   }) {
     return Container(
       height: 50,
@@ -136,6 +158,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         hintText: labelText,
         prefix: prefixIcon,
         fillColor: Colors.grey.shade200,
+        validator: validator, // Assign validator
       ),
     );
   }
@@ -148,13 +171,16 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         onPressed: isLoading
             ? null
             : () async {
-                    await ref.read(loginProvider).signupUser(
-                      context,
-                      emailController.text,
-                      nameController.text,
-                      passwordController.text,
-                    );
-              },
+          if (_formKey.currentState!.validate()) {
+            // If the form is valid, proceed with signup
+            await ref.read(loginProvider).signupUser(
+              context,
+              emailController.text,
+              nameController.text,
+              passwordController.text,
+            );
+          }
+        },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 15),
           shape: RoundedRectangleBorder(
@@ -165,12 +191,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         child: isLoading
             ? const CircularProgressIndicator(color: Colors.white)
             : const Text(
-                "Sign Up",
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
+          "Sign Up",
+          style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
