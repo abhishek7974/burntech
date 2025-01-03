@@ -28,6 +28,7 @@ class _AdminEvetsDetailsState extends ConsumerState<AdminEvetsDetails> {
 
     eventDataFuture = FirebaseFirestore.instance
         .collection('events')
+
         .doc(widget.eventId)
         .get();
   }

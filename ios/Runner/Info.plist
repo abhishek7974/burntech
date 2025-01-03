@@ -12,6 +12,16 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to provide better services.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location to provide better services even in the background.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need your location to provide accurate map data.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to allow you to select and upload photos and videos.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need access to save photos and videos to your photo library.</string>
 	<key>CFBundleName</key>
 	<string>burntech</string>
 	<key>CFBundlePackageType</key>
