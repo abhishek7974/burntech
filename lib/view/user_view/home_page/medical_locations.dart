@@ -18,7 +18,8 @@ class _MedicalLocationState extends ConsumerState<MedicalLocation> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((callback)async{
-     await ref.read(homeProvider).fetchHospitals();
+      final homeData = ref.watch(homeProvider);
+      homeData.loadMarkers(context);
     });
   }
 
@@ -28,7 +29,7 @@ class _MedicalLocationState extends ConsumerState<MedicalLocation> {
 
   @override
   Widget build(BuildContext context) {
-   final homeData = ref.read(homeProvider);
+   final homeData = ref.watch(homeProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('Hospitals at Burning Man'),
