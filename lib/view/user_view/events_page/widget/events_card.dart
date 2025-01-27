@@ -153,17 +153,14 @@ class _EventCardState extends ConsumerState<EventCard> {
                                   color: Colors.grey,
                                 ),
                               ),
-
                             ],
                           ),
-
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-
               Flexible(
                 child: CustomImageView(
                   radius: BorderRadius.circular(10.0),
@@ -173,25 +170,25 @@ class _EventCardState extends ConsumerState<EventCard> {
                   fit: BoxFit.cover,
                 ),
               ),
-
               if (widget.isDelete != null)
                 Row(
                   children: [
                     IconButton(
-                        onPressed: () async {
-                          try {
-                            FirebaseConstants.firestore
-                                .collection('events')
-                                .doc(widget.id)
-                                .delete();
-                          } catch (e) {
-                            print("something went wrong $e");
-                          }
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        )),
+                      onPressed: () async {
+                        try {
+                          FirebaseConstants.firestore
+                              .collection('events')
+                              .doc(widget.id)
+                              .delete();
+                        } catch (e) {
+                          print("something went wrong $e");
+                        }
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                    ),
                   ],
                 ),
             ],
